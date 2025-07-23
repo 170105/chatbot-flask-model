@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot - Prédiction de défaut</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: auto;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        .section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ecf0f1;
+        }
+
+        /* === Chatbot dynamique === */
+        .chat-box {
+            background-color: #eaf4ff;
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #cce;
+            scroll-behavior: smooth;
+            font-size: 15px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .message.user {
+            background-color: #d1f0f5;
+            text-align: right;
+            color: #00536b;
+        }
+
+        .message.ia {
+            background-color: #f9f9f9;
+            text-align: left;
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Section CSV -->
+    <h2>Importer un fichier CSV</h2>
+    <div class="section">
+        <form method="POST" action="/predict_csv" enctype="multipart/form-data">
+            <label>Choisir un fichier CSV :</label>
+            <input type="file" name="csv_file" accept=".csv" required>
+            <input type="submit" value="Prédire depuis CSV">
+        </form>
+
+        {% if csv_summary %}
+            <h3>Résumé du fichier analysé :</h3>
+            <ul>
+                <li><strong>Total de clients :</strong> {{ csv_summary.total }}</li>
+                <li><strong>Clients à risque :</strong> {{ csv_summary.risque }}</li>
+                <li><strong>Clients fiables :</strong> {{ csv_summary.fiables }}</li>
+            </ul>
+
+            <h4>Aperçu des 5 premières lignes :</h4>
+            {{ csv_summary.head_html|safe }}
+
+            <form action="/download_csv" method="post">
+                <input type="hidden" name="csv_content" value="{{ csv_download }}">
+                <input type="submit" value="📃 Télécharger les résultats">
+            </form>
+        {% endif %}
+    </div>
+
+    <!-- Section individuelle -->
+    <h2>Simulation individuelle d’un emprunteur</h2>
+    <div class="section">
+        <form method="POST" action="/">
+            {% include "form_fields.html" %}
+            <input type="submit" value="Lancer la prédiction">
+        </form>
+
+        {% if prediction is not none %}
+            <h3>Résultat de la prédiction :</h3>
+            {% if prediction == 1 %}
+                <p style="color:red;"><strong> Risque de défaut détecté</strong></p>
+            {% else %}
+                <p style="color:green;"><strong> Client fiable</strong></p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <!-- Section Chatbot -->
+    <h2> Assistance IA intégrée</h2>
+    <div class="section">
+        <div class="chat-box" id="chat-box">
+            {% if chat_history %}
+                {% for item in chat_history %}
+                    <div class="message user"><strong>Vous :</strong> {{ item["question"] }}</div>
+                    <div class="message ia"><strong>IA :</strong> {{ item["response"] }}</div>
+                {% endfor %}
+            {% else %}
+                <p>Aucune question posée pour le moment.</p>
+            {% endif %}
+        </div>
+
+        <form method="POST" action="/chat" style="margin-top: 15px;">
+            <label for="question"><strong>Posez votre question :</strong></label>
+            <input type="text" name="question" id="question" required placeholder="Ex: Pourquoi ce client est à risque ?">
+            <input type="submit" value="Envoyer">
+        </form>
+
+        <form action="/reset_chat" method="get" style="margin-top: 10px;">
+            <input type="submit" value="Réinitialiser le chatbot">
+        </form>
+    </div>
+
+    <!-- Script pour scroll auto -->
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        if (chatBox) {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<label for="loan_amnt"> Montant du prêt demandé :</label>
+<input type="number" id="loan_amnt" name="loan_amnt" placeholder="Ex : 15000" required>
+
+<label for="term"> Durée du prêt (en mois) :</label>
+<select id="term" name="term">
+    <option value="36">36 mois</option>
+    <option value="60">60 mois</option>
+</select>
+
+<label for="int_rate"> Taux d'intérêt annuel (%) :</label>
+<input type="number" id="int_rate" name="int_rate" step="0.01" placeholder="Ex : 13.5" required>
+
+<label for="installment"> Mensualité estimée  :</label>
+<input type="number" id="installment" name="installment" placeholder="Ex : 320">
+
+<label for="annual_inc"> Revenu annuel  :</label>
+<input type="number" id="annual_inc" name="annual_inc" placeholder="Ex : 40000" required>
+
+<label for="emp_length"> Ancienneté professionnelle :</label>
+<input type="text" id="emp_length" name="emp_length" value="10+ years" placeholder="Ex : 5 years">
+
+<label for="grade"> Note de crédit principale (A à G) :</label>
+<input type="text" id="grade" name="grade" value="B" placeholder="Ex : B">
+
+<label for="sub_grade"> Sous-note (A1 à G5) :</label>
+<input type="text" id="sub_grade" name="sub_grade" value="B4" placeholder="Ex : B2">
+
+<label for="home_ownership"> Statut d’occupation du logement :</label>
+<select id="home_ownership" name="home_ownership">
+    <option value="RENT">Locataire (RENT)</option>
+    <option value="OWN">Propriétaire (OWN)</option>
+    <option value="MORTGAGE">Avec crédit (MORTGAGE)</option>
+    <option value="OTHER">Autre</option>
+</select>
+
+<label for="purpose"> Motif du prêt :</label>
+<select id="purpose" name="purpose">
+    <option value="credit_card">Carte de crédit</option>
+    <option value="debt_consolidation">Consolidation de dettes</option>
+    <option value="home_improvement">Travaux de maison</option>
+    <option value="other">Autre</option>
+</select>
+
+<label for="verification_status"> Vérification du revenu :</label>
+<select id="verification_status" name="verification_status">
+    <option value="Verified">Vérifié</option>
+    <option value="Source Verified">Source vérifiée</option>
+    <option value="Not Verified">Non vérifié</option>
+</select>
+
+<label for="revol_util"> Utilisation du crédit renouvelable (%) :</label>
+<input type="number" id="revol_util" name="revol_util" step="0.1" placeholder="Ex : 40.0">
+
+<label for="dti"> Ratio dette/revenu (DTI) (%) :</label>
+<input type="number" id="dti" name="dti" step="0.1" placeholder="Ex : 20.5">
+
+<label for="revol_bal"> Solde de crédit renouvelable :</label>
+<input type="number" id="revol_bal" name="revol_bal" placeholder="Ex : 10000">
+
+<label for="open_acc"> Nombre de comptes ouverts :</label>
+<input type="number" id="open_acc" name="open_acc" placeholder="Ex : 8">
+
+<label for="total_acc"> Nombre total de lignes de crédit :</label>
+<input type="number" id="total_acc" name="total_acc" placeholder="Ex : 25">
+
+<label for="mort_acc"> Nombre de prêts immobiliers :</label>
+<input type="number" id="mort_acc" name="mort_acc" placeholder="Ex : 2">
+
+<label for="pub_rec_bankruptcies"> Faillites publiques déclarées :</label>
+<input type="number" id="pub_rec_bankruptcies" name="pub_rec_bankruptcies" placeholder="Ex : 0">
+
+<label for="pub_rec"> Nombre de dossiers publics négatifs :</label>
+<input type="number" id="pub_rec" name="pub_rec" placeholder="Ex : 1">
+
+<label for="initial_list_status"> Statut initial de l’annonce :</label>
+<select id="initial_list_status" name="initial_list_status">
+    <option value="w">w</option>
+    <option value="f">f</option>
+</select>
+
+<label for="application_type"> Type de demande :</label>
+<select id="application_type" name="application_type">
+    <option value="INDIVIDUAL">Individuelle</option>
+    <option value="JOINT">Conjointe</option>
+</select>
+
+<label for="issue_d"> Date d’émission du prêt (JJ-MM-AA) :</label>
+<input type="text" id="issue_d" name="issue_d" value="15-06-20" placeholder="Ex : 01-05-20">
+
+<label for="earliest_cr_line"> Ancienneté de la première ligne de crédit (JJ-MM-AA) :</label>
+<input type="text" id="earliest_cr_line" name="earliest_cr_line" value="01-02-12" placeholder="Ex : 01-01-10">
