@@ -3,3 +3,4 @@ lightgbm==4.6.0
 pandas==2.2.3
 scikit-learn==1.5.2
 numpy==2.1.2
+gunicorn==20.1.0
